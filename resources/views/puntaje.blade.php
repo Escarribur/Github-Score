@@ -10,7 +10,7 @@
 	<h3>Puntaje Estrellas: {{$star}}</h3>
 	<h3>GitHub Total Score: {{$score}}</h3>
 	
-
+	<a href="{{ URL::previous() }}">Volver</a>
 
 
 @stop

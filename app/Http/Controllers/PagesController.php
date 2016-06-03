@@ -43,6 +43,50 @@ class PagesController extends Controller
             'score'=>$score ]);
     }
 
+
+    public function batalla_post(Request $request)
+    {
+        $usuarioA = $request->input('usuarioA');
+        $usuarioB = $request->input('usuarioB');
+        $eventScoreA = $this->eventScore($usuarioA);
+        $followerScoreA = $this->followerScore($usuarioA);
+        $starScoreA = $this->starScore($usuarioA);
+
+        $eventScoreB = $this->eventScore($usuarioB);
+        $followerScoreB = $this->followerScore($usuarioB);
+        $starScoreB = $this->starScore($usuarioB);
+
+        /*
+        $result = array('usuario' =>$usuario ,
+            'evento' =>$eventScore ,
+            'follower' =>$followerScore ,
+            'star' =>$starScore  );
+       */
+        $scoreA = 0.4 * $eventScoreA + 0.4 * $starScoreA + 0.2 * $followerScoreA;
+        $scoreB = 0.4 * $eventScoreB + 0.4 * $starScoreB + 0.2 * $followerScoreB;
+
+        if ($scoreA > $scoreB)
+            $ganador=$usuarioA;
+        else
+            $ganador = $usuarioB;
+        
+        return view('batalla',['usuarioA' =>$usuarioA ,
+            'eventoA' =>$eventScoreA ,
+            'followerA' =>$followerScoreA ,
+            'starA' =>$starScoreA,
+            'scoreA'=>$scoreA,
+            'usuarioB' =>$usuarioB ,
+            'eventoB' =>$eventScoreB ,
+            'followerB' =>$followerScoreB ,
+            'starB' =>$starScoreB,
+            'scoreB'=>$scoreB,
+            'ganador'=>$ganador]);
+    }
+
+    public function batalla(){
+        return view('batalla');
+    }
+
     public function score(){
         return view('puntaje');
     }

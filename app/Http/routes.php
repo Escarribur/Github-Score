@@ -16,6 +16,9 @@ Route::get('/', 'PagesController@home');
 Route::post('puntaje', 'PagesController@score_post');
 Route::get('puntaje', 'PagesController@score');
 
+Route::post('batalla', 'PagesController@batalla_post');
+Route::get('batalla', 'PagesController@batalla');
+
 Route::get('about', 'PagesController@about');
 
 Route::get('cards', 'CardsController@index');

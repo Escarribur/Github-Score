@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCardTable extends Migration
+class CrearUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,14 @@ class CreateCardTable extends Migration
      */
     public function up()
     {
-        Schema::create('cards', function (Blueprint $table) {
+       Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
+            $table->string('usuario');
+            $table->string('enlace');
+            $table->integer('events');
+            $table->integer('followers');
+            $table->integer('stars');
+            $table->integer('score');
             $table->timestamps();
         });
     }
@@ -26,6 +31,6 @@ class CreateCardTable extends Migration
      */
     public function down()
     {
-        Schema::drop('cards');
+          Schema::drop('users');
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use GuzzleHttp\Client;
-
+use App\User;
 
 class PagesController extends Controller
 {
@@ -36,6 +36,21 @@ class PagesController extends Controller
        */
         $score = 0.4 * $eventScore + 0.4 * $starScore + 0.2 * $followerScore;
         
+        $check = User::where('usuario', $usuario)->first();
+        
+        if (is_null($check)) {
+            $user= new User;
+            $user->usuario = $usuario;
+            $user->enlace = "https://api.github.com/users/{$usuario}";
+            $user->events = $eventScore;
+            $user->followers = $followerScore;
+            $user->stars = $starScore;
+            $user->score = $score;
+
+            $user->save();
+        }
+        
+
         return view('puntaje',['usuario' =>$usuario ,
             'evento' =>$eventScore ,
             'follower' =>$followerScore ,
@@ -69,6 +84,35 @@ class PagesController extends Controller
             $ganador=$usuarioA;
         else
             $ganador = $usuarioB;
+
+
+         $check = User::where('usuario', $usuarioA)->first();
+        
+        if (is_null($check)) {
+            $user= new User;
+            $user->usuario = $usuarioA;
+            $user->enlace = "https://api.github.com/users/{$usuarioA}";
+            $user->events = $eventScoreA;
+            $user->followers = $followerScoreA;
+            $user->stars = $starScoreA;
+            $user->score = $scoreA;
+
+            $user->save();
+        }
+
+         $check2 = User::where('usuario', $usuarioB)->first();
+        
+        if (is_null($check2)) {
+            $user= new User;
+            $user->usuario = $usuarioB;
+            $user->enlace = "https://api.github.com/users/{$usuarioB}";
+            $user->events = $eventScoreB;
+            $user->followers = $followerScoreB;
+            $user->stars = $starScoreB;
+            $user->score = $scoreB;
+
+            $user->save();
+        }
         
         return view('batalla',['usuarioA' =>$usuarioA ,
             'eventoA' =>$eventScoreA ,
